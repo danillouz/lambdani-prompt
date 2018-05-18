@@ -17,11 +17,11 @@ _git_status() {
   local _staged="%{$reset_color%}%{$fg[green]%}●%{$reset_color%}"
   local _unstaged="%{$reset_color%}%{$fg[magenta]%}●%{$reset_color%}"
   local _untracked="%{$reset_color%}%{$fg[yellow]%}●%{$reset_color%}"
-  local _unmerged="%{$reset_color%}%{$fg[red]%}\u26A1%{$reset_color%}"
-  local _ahead="%{$reset_color%}%{$fg[green]%}\u25B2%{$reset_color%}"
-  local _behind="%{$reset_color%}%{$fg[red]%}\u25BC%{$reset_color%}"
-  local _diverged="%{$reset_color%}%{$fg[red]%}\uE0A0%{$reset_color%}"
-  local _stashed="%{$reset_color%}%{$fg[yellow]%}\uF187%{$reset_color%}"
+  local _unmerged="%{$reset_color%}%{$fg[red]%}⚡%{$reset_color%}"
+  local _ahead="%{$reset_color%}%{$fg[green]%}▲%{$reset_color%}"
+  local _behind="%{$reset_color%}%{$fg[red]%}▼%{$reset_color%}"
+  local _diverged="%{$reset_color%}%{$fg[red]%}❖%{$reset_color%}"
+  local _stashed="%{$reset_color%}%{$fg[yellow]%}❒%{$reset_color%}"
 
   if [[ -n "$_index" ]]; then
     if $(echo "$_index" | command grep -q '^[AMRD]. '); then
@@ -74,14 +74,14 @@ _git_prompt() {
       _result="$_result $_status"
     fi
 
-    _result="\uF126 $_result "
+    _result="git:$_result "
   fi
 
   echo $_result
 }
 
 _work_dir() {
-  echo "\uE5FF %{$fg[$LAMBDANI_WD_COLOR]%}%~%{$reset_color%}"
+  echo "%{$fg[$LAMBDANI_WD_COLOR]%}%~%{$reset_color%}"
 }
 
 _k8s() {
@@ -92,7 +92,7 @@ _k8s() {
 
 _aws() {
   if __exists aws; then
-    echo "\uF6A5 $AWS_DEFAULT_PROFILE"
+    echo "aws $AWS_DEFAULT_PROFILE"
   fi
 }
 
@@ -100,12 +100,12 @@ _separator() {
   local color
 
   if [[ $RETVAL -eq 0 ]]; then
-    color="%{$reset_color%}"
+    color="green"
   else
     color="red"
   fi
 
-  echo "%{$fg[$color]%}λ%{$reset_color%}"
+  echo "%{$fg_bold[$color]%}λ%{$reset_color%}"
 }
 
 _prompt() {
@@ -122,9 +122,11 @@ _r_prompt() {
 # see https://github.com/jonmosco/kube-ps1
 source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
 KUBE_PS1_PREFIX=""
-KUBE_PS1_SEPARATOR=""
+KUBE_PS1_SEPARATOR="k8s:"
+KUBE_PS1_DIVIDER="."
 KUBE_PS1_SUFFIX=""
-KUBE_PS1_SYMBOL_COLOR="%{$reset_color%}"
+KUBE_PS1_SYMBOL_DEFAULT=""
+KUBE_PS1_CTX_COLOR="yellow"
 
 LAMBDANI_WD_COLOR="${LAMBDANI_WD_COLOR=blue}"
 LAMBDANI_GIT_BRANCH_COLOR="${LAMBDANI_GIT_BRANCH_COLOR=cyan}"
