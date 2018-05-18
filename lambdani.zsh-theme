@@ -17,7 +17,7 @@ _git_status() {
   local _staged="%{$reset_color%}%{$fg[green]%}●%{$reset_color%}"
   local _unstaged="%{$reset_color%}%{$fg[magenta]%}●%{$reset_color%}"
   local _untracked="%{$reset_color%}%{$fg[yellow]%}●%{$reset_color%}"
-  local _unmerged="%{$reset_color%}%{$fg[red]%}⚡%{$reset_color%}"
+  local _unmerged="%{$reset_color%}%{$fg[red]%}✖︎%{$reset_color%}"
   local _ahead="%{$reset_color%}%{$fg[green]%}▲%{$reset_color%}"
   local _behind="%{$reset_color%}%{$fg[red]%}▼%{$reset_color%}"
   local _diverged="%{$reset_color%}%{$fg[red]%}❖%{$reset_color%}"
@@ -111,7 +111,7 @@ _separator() {
 _prompt() {
   RETVAL=$?
 
-  echo "\\n$(_work_dir) $(_git_prompt)$(_separator) "
+  echo "\\n$(_work_dir) $(_git_prompt)\\n$(_separator) "
 }
 
 _r_prompt() {
@@ -122,11 +122,12 @@ _r_prompt() {
 # see https://github.com/jonmosco/kube-ps1
 source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
 KUBE_PS1_PREFIX=""
+KUBE_PS1_SYMBOL_DEFAULT=""
 KUBE_PS1_SEPARATOR="k8s:"
 KUBE_PS1_DIVIDER="."
 KUBE_PS1_SUFFIX=""
-KUBE_PS1_SYMBOL_DEFAULT=""
 KUBE_PS1_CTX_COLOR="yellow"
+KUBE_PS1_NS_COLOR="cyan"
 
 LAMBDANI_WD_COLOR="${LAMBDANI_WD_COLOR=blue}"
 LAMBDANI_GIT_BRANCH_COLOR="${LAMBDANI_GIT_BRANCH_COLOR=cyan}"
